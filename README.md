@@ -3,3 +3,5 @@
 * Exo. 01 - Wikidata : [https://ereyes.github.io/datavis2223/e01-wikidata.html](https://ereyes.github.io/datavis2223/e01-wikidata.html)
 
 * Exo. 02 - Modèles graphiques : [https://ereyes.github.io/datavis2223/e02_graphiques.html](https://ereyes.github.io/datavis2223/e02_graphiques.html)
+
+* Exo. 03 - Visualisation interactives : [https://ereyes.github.io/datavis2223/e03_vis_interactive.html](https://ereyes.github.io/datavis2223/e03_vis_interactive.html)
