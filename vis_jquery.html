@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Visualisation avec jQuery</title>
+    <style media="screen">
+      .vignette {
+        height:10px;
+        display:block;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+
+      $(document).ready(function(){
+        $('h1').text('Visualisation avec jQuery');
+        $.getJSON('https://raw.githubusercontent.com/ereyes/datavis2223/main/univ_wikidata.json', function(data){
+
+          $.each(data, function(i, d){
+
+            var mes_donnees = '<img class="vignette" src="'+d.image+'" style="width:'+d.students_count/500+'px;">';
+
+            $('#viz').append(mes_donnees);
+
+
+          });
+
+        });
+      });
+
+    </script>
+  </head>
+  <body>
+
+    <h1></h1>
+
+    <div id="viz"></div>
+
+
+
+  </body>
+</html>
