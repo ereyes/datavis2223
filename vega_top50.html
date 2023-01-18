@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+</head>
+<body>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A scatterplot showing body mass and flipper lengths of penguins.",
+  "background": "white",
+  "padding": 5,
+  "width": 500,
+  "height": 500,
+  "style": "cell",
+  "data": [
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/ereyes/datavis2223/main/top50.json",
+      "format": {"type": "json"},
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Popularity\"]) && isFinite(+datum[\"Popularity\"]) && isValid(datum[\"Length\"]) && isFinite(+datum[\"Length\"])"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "marks",
+      "type": "symbol",
+      "style": ["point"],
+      "from": {"data": "source_0"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 0.7},
+          "fill": {"value": "transparent"},
+          "stroke": {"scale": "color", "field": "Genre"},
+          "tooltip": {
+            "signal": "isValid(datum[\"ArtistName\"]) ? datum[\"ArtistName\"] : \"\"+datum[\"ArtistName\"]"
+          },
+          "ariaRoleDescription": {"value": "point"},
+          "description": {
+            "signal": "\"Popularity: \" + (format(datum[\"Popularity\"], \"\")) + \"; Length: \" + (format(datum[\"Length\"], \"\")) + \"; Genre: \" + (isValid(datum[\"Genre\"]) ? datum[\"Genre\"] : \"\"+datum[\"Genre\"]) + \"; ArtistName: \" + (isValid(datum[\"ArtistName\"]) ? datum[\"ArtistName\"] : \"\"+datum[\"ArtistName\"])"
+          },
+          "x": {"scale": "x", "field": "Popularity"},
+          "y": {"scale": "y", "field": "Length"}
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": {"data": "source_0", "field": "Popularity"},
+      "range": [0, {"signal": "width"}],
+      "zero": false,
+      "nice": true
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": {"data": "source_0", "field": "Length"},
+      "range": [{"signal": "height"}, 0],
+      "zero": false,
+      "nice": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "source_0", "field": "Genre", "sort": true},
+      "range": "category"
+    }
+  ],
+  "axes": [
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "gridScale": "y",
+      "grid": true,
+      "tickCount": {"signal": "ceil(width/40)"},
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "gridScale": "x",
+      "grid": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "title": "Popularity",
+      "labelFlush": true,
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(width/40)"},
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "Length",
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "zindex": 0
+    }
+  ],
+  "legends": [
+    {
+      "stroke": "color",
+      "symbolType": "circle",
+      "title": "Genre",
+      "encode": {
+        "symbols": {
+          "update": {
+            "fill": {"value": "transparent"},
+            "opacity": {"value": 0.7}
+          }
+        }
+      }
+    }
+  ],
+  "config": {}
+};
+    vegaEmbed("#vis", spec, {mode: "vega"}).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>
